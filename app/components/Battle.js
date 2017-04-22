@@ -1,24 +1,7 @@
 var React = require('react');
 var PropTypes = require('prop-types');
 import {Link, NavLink} from 'react-router-dom'
-
-function PlayerPreview(props) {
-  return(
-    <div>
-      <div className='column'>
-        <img 
-          className='avatar'
-          src={props.avatar}
-          alt={'Avatar for' + props.username}
-        />
-        <h2 className='username'>@{props.username}</h2>
-      </div>
-      <button className='reset' onClick={props.onReset.bind(null, props.id)}>
-        Reset
-      </button>
-    </div>
-  )
-}
+import PlayerPreview from './PlayerPreview'
 
 class Battle extends React.Component {
   
@@ -68,10 +51,12 @@ class Battle extends React.Component {
           {
             playerOneImage !== null &&
             <PlayerPreview 
-            avatar = {playerOneImage}
-            username = {playerOneName}
-            onReset = {this.handleReset}
-            id='playerOne' />
+              avatar = {playerOneImage}
+              username = {playerOneName}>
+              <button className='reset' onClick={this.handleReset.bind(null, 'playerOne')}>
+                Reset
+              </button>
+             </PlayerPreview>
           }
           {
             !playerTwoName &&
@@ -81,10 +66,11 @@ class Battle extends React.Component {
             playerTwoImage != null &&
             <PlayerPreview
               avatar = {playerTwoImage}
-              username = {playerTwoName}
-              onReset = {this.handleReset}
-              id= 'playerTwo'
-            />
+              username = {playerTwoName}>
+              <button className='reset' onClick={this.handleReset.bind(null, 'playerTwo')}>
+                Reset
+              </button>
+            </PlayerPreview>
           }
           
         </div>
@@ -152,16 +138,8 @@ class PlayerInput extends React.Component {
 }
 
 PlayerInput.propTypes = {
-  id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired
-}
-
-PlayerPreview.propTypes = {
-  id: PropTypes.string.isRequired,
-  avatar: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  onReset: PropTypes.func.isRequired
 }
 
 module.exports = Battle;
