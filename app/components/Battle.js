@@ -1,5 +1,6 @@
 var React = require('react');
 var PropTypes = require('prop-types');
+import {Link, NavLink} from 'react-router-dom'
 
 function PlayerPreview(props) {
   return(
@@ -18,6 +19,7 @@ function PlayerPreview(props) {
     </div>
   )
 }
+
 class Battle extends React.Component {
   
   constructor(props){
@@ -40,6 +42,7 @@ class Battle extends React.Component {
       return(newState);
     });
   }
+
   handleReset(id){
     this.setState(function(){
       var newState = {};
@@ -49,6 +52,7 @@ class Battle extends React.Component {
     });
   }
   render() {
+    var match = this.props.match;
     var playerOneName = this.state.playerOneName;
     var playerTwoName = this. state.playerTwoName;
     var playerOneImage = this.state.playerOneImage;
@@ -57,28 +61,44 @@ class Battle extends React.Component {
     return (
       <div>
         <div className='row'>
-          {!playerOneName &&
-          <PlayerInput id='playerOne' label='Player One' onSubmit={this.handleSubmit} />
+          {
+            !playerOneName &&
+            <PlayerInput id='playerOne' label='Player One' onSubmit={this.handleSubmit} />
           }
-          {playerOneImage !== null &&
-          <PlayerPreview 
-          avatar = {playerOneImage}
-          username = {playerOneName}
-          onReset = {this.handleReset}
-          id='playerOne' />
+          {
+            playerOneImage !== null &&
+            <PlayerPreview 
+            avatar = {playerOneImage}
+            username = {playerOneName}
+            onReset = {this.handleReset}
+            id='playerOne' />
           }
-          {!playerTwoName &&
+          {
+            !playerTwoName &&
             <PlayerInput id='playerTwo' label='Player Two' onSubmit={this.handleSubmit} />
           }
-          {playerTwoImage != null &&
-          <PlayerPreview
+          {
+            playerTwoImage != null &&
+            <PlayerPreview
               avatar = {playerTwoImage}
               username = {playerTwoName}
               onReset = {this.handleReset}
               id= 'playerTwo'
             />
           }
+          
         </div>
+        {
+          playerOneImage && playerTwoImage &&
+            <Link className='button' to={
+              {
+                pathname: match.url + '/results',
+                search: `?playerOneName=`+playerOneName + `&playerTwoName=` + playerTwoName
+              }
+            }> 
+              Battle
+            </Link>
+        }
       </div>
     )
   }
