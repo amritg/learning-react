@@ -3,7 +3,10 @@ import queryString from 'query-string';
 import Api from '../utils/api';
 import { Link } from 'react-router-dom';
 import PlayerPreview from './PlayerPreview';
+import Loading from './Loading';
+
 var PropTypes = require('prop-types');
+
 
 function Profile(props) {
   
@@ -86,7 +89,7 @@ class Results extends React.Component {
     var loading = this.state.loading;
 
     if (loading == true) {
-      return <p>Loading</p>
+      return <Loading />
     }
 
     if (error) {

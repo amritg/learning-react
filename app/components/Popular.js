@@ -1,5 +1,6 @@
 import React from 'react';
 import API from '../utils/api';
+import Loading from './Loading';
 
 
 class Popular extends React.Component {
@@ -57,7 +58,9 @@ class Popular extends React.Component {
                 }
             </ul>
                 {
-                    !this.state.repos ? <p>Loading</p>:<RepoGrid repos={this.state.repos}/>
+                    !this.state.repos 
+                    ? <Loading text='Waiting'/>
+                    :<RepoGrid repos={this.state.repos}/>
                 }
                 
             </div>
